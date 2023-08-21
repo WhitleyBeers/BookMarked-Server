@@ -1,0 +1,52 @@
+[
+  {
+    "model": "bookmarkedapi.review",
+    "pk": 1,
+    "fields": {
+      "book_id": 5,
+      "user_id": 3,
+      "content": "I would recommend this book to anyone who loves a good mystery.",
+      "rating": 4
+    }
+  },
+  {
+    "model": "bookmarkedapi.review",
+    "pk": 2,
+    "fields": {
+      "book_id": 2,
+      "user_id": 1,
+      "content": "An inspiring story that touched my heart.",
+      "rating": 5
+    }
+  },
+  {
+    "model": "bookmarkedapi.review",
+    "pk": 3,
+    "fields": {
+      "book_id": 4,
+      "user_id": 5,
+      "content": "Couldn't put this book down! A must-read.",
+      "rating": 5
+    }
+  },
+  {
+    "model": "bookmarkedapi.review",
+    "pk": 4,
+    "fields": {
+      "book_id": 1,
+      "user_id": 2,
+      "content": "The plot was a bit confusing, but the characters were interesting.",
+      "rating": 3
+    }
+  },
+  {
+    "model": "bookmarkedapi.review",
+    "pk": 5,
+    "fields": {
+      "book_id": 3,
+      "user_id": 4,
+      "content": "This book exceeded my expectations. A real page-turner!",
+      "rating": 5
+    }
+  }
+]
