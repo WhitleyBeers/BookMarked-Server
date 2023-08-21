@@ -1,0 +1,42 @@
+[
+  {
+    "model": "bookmarkedapi.following",
+    "pk": 1,
+    "fields": {
+      "follower_id": 3,
+      "author_id": 5
+    }
+  },
+  {
+    "model": "bookmarkedapi.following",
+    "pk": 2,
+    "fields": {
+      "follower_id": 2,
+      "author_id": 4
+    }
+  },
+  {
+    "model": "bookmarkedapi.following",
+    "pk": 3,
+    "fields": {
+      "follower_id": 1,
+      "author_id": 3
+    }
+  },
+  {
+    "model": "bookmarkedapi.following",
+    "pk": 4,
+    "fields": {
+      "follower_id": 5,
+      "author_id": 2
+    }
+  },
+  {
+    "model": "bookmarkedapi.following",
+    "pk": 5,
+    "fields": {
+      "follower_id": 4,
+      "author_id": 1
+    }
+  }
+]

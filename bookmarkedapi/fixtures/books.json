@@ -1,0 +1,72 @@
+[
+  {
+    "model": "bookmarkedapi.book",
+    "pk": 1,
+    "fields": {
+      "title": "Lady Vanishes, The",
+      "author": "Babita Vinau",
+      "description": "A chilling horror story that will send shivers down your spine.",
+      "favorite": true,
+      "image_url": "http://dummyimage.com/168x100.png/dddddd/000000",
+      "status": "To Be Read",
+      "user_id": 4,
+      "date_added": "2023-02-03"
+    }
+  },
+  {
+    "model": "bookmarkedapi.book",
+    "pk": 2,
+    "fields": {
+      "title": "The Secret Garden",
+      "author": "Frances Hodgson Burnett",
+      "description": "A classic tale of a hidden magical garden and its young discoverers.",
+      "favorite": false,
+      "image_url": "http://dummyimage.com/168x100.png/aaaaaa/000000",
+      "status": "Read",
+      "user_id": 5,
+      "date_added": "2022-11-15"
+    }
+  },
+  {
+    "model": "bookmarkedapi.book",
+    "pk": 3,
+    "fields": {
+      "title": "1984",
+      "author": "George Orwell",
+      "description": "A dystopian novel about a totalitarian society and the power of truth.",
+      "favorite": true,
+      "image_url": "http://dummyimage.com/168x100.png/cccccc/000000",
+      "status": "Reading",
+      "user_id": 2,
+      "date_added": "2023-01-20"
+    }
+  },
+  {
+    "model": "bookmarkedapi.book",
+    "pk": 4,
+    "fields": {
+      "title": "Thor: Tales of Asgard",
+      "author": "Davida Farr",
+      "description": "An epic fantasy adventure filled with magic and mystery.",
+      "favorite": true,
+      "image_url": "http://dummyimage.com/213x100.png/cc0000/ffffff",
+      "status": "Did Not Finish",
+      "user_id": 1,
+      "date_added": "2022-07-06"
+    }
+  },
+  {
+    "model": "bookmarkedapi.book",
+    "pk": 5,
+    "fields": {
+      "title": "Speedway Junky",
+      "author": "Milka Freeth",
+      "description": "A chilling horror story that will send shivers down your spine.",
+      "favorite": false,
+      "image_url": "http://dummyimage.com/174x100.png/5fa2dd/ffffff",
+      "status": "Currently Reading",
+      "user_id": 3,
+      "date_added": "2023-06-29"
+    }
+  }
+]
