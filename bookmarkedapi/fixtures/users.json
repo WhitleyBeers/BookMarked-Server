@@ -1,0 +1,74 @@
+[
+  {
+    "model": "bookmarkedapi.user",
+    "pk": 1,
+    "fields": {
+      "first_name": "Jeralee",
+      "last_name": "McCurdy",
+      "email": "jmccurdy0@nymag.com",
+      "uid": "Mum6L9cb",
+      "bio": "Assimilated even-keeled policy",
+      "profile_image_url": "https://robohash.org/errornecessitatibusvoluptate.png?size=50x50&set=set1"
+    }
+  },
+  {
+    "model": "bookmarkedapi.user",
+    "pk": 2,
+    "fields": {
+      "first_name": "John",
+      "last_name": "Doe",
+      "email": "johndoe@example.com",
+      "uid": "Abc123def",
+      "bio": "Lover of all things tech",
+      "profile_image_url": "https://robohash.org/johndoe.png?size=50x50&set=set1"
+    }
+  },
+  {
+    "model": "bookmarkedapi.user",
+    "pk": 3,
+    "fields": {
+      "first_name": "Jane",
+      "last_name": "Smith",
+      "email": "janesmith@example.com",
+      "uid": "Xyz789uvw",
+      "bio": "Explorer of new horizons",
+      "profile_image_url": "https://robohash.org/janesmith.png?size=50x50&set=set1"
+    }
+  },
+  {
+    "model": "bookmarkedapi.user",
+    "pk": 4,
+    "fields": {
+      "first_name": "Peria",
+      "last_name": "Kyndred",
+      "email": "pkyndred2@uol.com.br",
+      "uid": "7WiGPNw4",
+      "bio": "Persistent tangible leverage",
+      "profile_image_url": "https://robohash.org/explicaboundesint.png?size=50x50&set=set1"
+    }
+  },
+  {
+    "model": "bookmarkedapi.user",
+    "pk": 4,
+    "fields": {
+      "first_name": "Rriocard",
+      "last_name": "Huguet",
+      "email": "rhuguet1@1688.com",
+      "uid": "ngKDRZXm",
+      "bio": "Face to face responsive orchestration",
+      "profile_image_url": "https://robohash.org/utveniamdolor.png?size=50x50&set=set1"
+    }
+  },
+  {
+    "model": "bookmarkedapi.user",
+    "pk": 5,
+    "fields": {
+      "first_name": "Jennie",
+      "last_name": "Hallewell",
+      "email": "jhallewell5@uol.com.br",
+      "uid": "Z5ZCBMl5",
+      "bio": "Managed maximized functionalities",
+      "profile_image_url": "https://robohash.org/quoetquia.png?size=50x50&set=set1"
+    }
+  }
+]
