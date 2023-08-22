@@ -16,3 +16,13 @@ class UserView(ViewSet):
             return Response(serializer.data)
         except User.DoesNotExist as ex:
             return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+    
+    def list(self, request):
+        """GET request for list of users"""
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+    
+    def update(self, request, pk):
+        """PUT request to update a user"""
+        pass
