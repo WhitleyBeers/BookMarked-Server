@@ -25,4 +25,12 @@ class UserView(ViewSet):
     
     def update(self, request, pk):
         """PUT request to update a user"""
-        pass
+        user = User.objects.get(pk=pk)
+        uid = request.META['HTTP_AUTHORIZATION']
+        user.first_name = request.data['firstName']
+        user.last_name = request.data['lastName']
+        user.bio = request.data['bio']
+        user.profile_image_url = request.data['profileImageUrl']
+        user.uid = uid
+        user.save()
+        return Response({'message': 'User updated'}, status=status.HTTP_204_NO_CONTENT)
