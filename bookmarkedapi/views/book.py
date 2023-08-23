@@ -25,16 +25,28 @@ class BookView(ViewSet):
         return Response(serializer.data)
       
     def create(self, request):
-      """POST request to create a book"""
-      user = User.objects.get(id=request.META['HTTP_AUTHORIZATION'])
-      book = Book.objects.create(
-        user_id = user,
-        title = request.data['title'],
-        author = request.data['author'],
-        description = request.data['description'],
-        favorite = request.data['favorite'],
-        image_url = request.data['imageUrl'],
-        status = request.data['status'],
-      )
-      serializer = BookSerializer(book)
-      return Response(serializer.data)
+        """POST request to create a book"""
+        user = User.objects.get(id=request.META['HTTP_AUTHORIZATION'])
+        book = Book.objects.create(
+          user_id = user,
+          title = request.data['title'],
+          author = request.data['author'],
+          description = request.data['description'],
+          favorite = request.data['favorite'],
+          image_url = request.data['imageUrl'],
+          status = request.data['status'],
+        )
+        serializer = BookSerializer(book)
+        return Response(serializer.data)
+    
+    def update(self, request, pk):
+        """PUT request to update a book"""
+        book = Book.objects.get(pk=pk)
+        book.title = request.data['title']
+        book.author = request.data['author']
+        book.description = request.data['description']
+        book.favorite = request.data['favorite']
+        book.image_url = request.data['imageUrl']
+        book.status = request.data['status']
+        book.save()
+        return Response({'message': 'Book updated successfully'}, status=status.HTTP_204_NO_CONTENT)
