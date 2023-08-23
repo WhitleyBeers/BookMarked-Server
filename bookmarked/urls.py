@@ -17,11 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from bookmarkedapi.views import check_user, register_user
-from bookmarkedapi.views import UserView, BookView
+from bookmarkedapi.views import UserView, BookView, ReviewView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'users', UserView, 'user')
 router.register(r'books', BookView, 'book')
+router.register(r'reviews', ReviewView, 'review')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
