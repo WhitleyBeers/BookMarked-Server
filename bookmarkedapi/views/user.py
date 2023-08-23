@@ -3,7 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
-from bookmarkedapi.serializers import UserSerializer, ReviewSerializer
+from bookmarkedapi.serializers import UserSerializer, ReviewSerializer, FollowingSerializer
 from bookmarkedapi.models import User, Review, Following
 
 
@@ -66,3 +66,12 @@ class UserView(ViewSet):
         )
         following.delete()
         return Response({'message': 'User unfollowed'}, status=status.HTTP_204_NO_CONTENT)
+    
+    @action(methods=['get'], detail=True)
+    def following(self, request, pk):
+        """Gets users that a specific user follows"""
+        following_list = Following.objects.all()
+        user = User.objects.get(pk=pk)
+        following_list = following_list.filter(follower_id=user)
+        serializer = FollowingSerializer(following_list, many=True)
+        return Response(serializer.data)
