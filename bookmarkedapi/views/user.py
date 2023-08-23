@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
 from bookmarkedapi.serializers import UserSerializer, ReviewSerializer
-from bookmarkedapi.models import User, Review
+from bookmarkedapi.models import User, Review, Following
 
 
 class UserView(ViewSet):
@@ -43,3 +43,14 @@ class UserView(ViewSet):
         reviews = reviews.filter(user_id = pk)
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
+
+    @action(methods=['post'], detail=True)
+    def follow(self, request, pk):
+        """Post request for a user to follow another user"""
+        follower_id = User.objects.get(pk=request.META['HTTP_AUTHORIZATION'])
+        author_id = User.objects.get(pk=pk)
+        following = Following.objects.create(
+            follower_id=follower_id,
+            author_id=author_id
+        )
+        return Response({'message': 'Now following user'}, status=status.HTTP_201_CREATED)
