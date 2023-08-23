@@ -2,8 +2,9 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from bookmarkedapi.serializers import UserSerializer, CreateUserSerializer
-from bookmarkedapi.models import User
+from rest_framework.decorators import action
+from bookmarkedapi.serializers import UserSerializer, ReviewSerializer
+from bookmarkedapi.models import User, Review
 
 
 class UserView(ViewSet):
@@ -34,3 +35,11 @@ class UserView(ViewSet):
         user.uid = uid
         user.save()
         return Response({'message': 'User updated'}, status=status.HTTP_204_NO_CONTENT)
+
+    @action(methods=['get'], detail=True)
+    def reviews(self, request, pk):
+        """Get request to see reviews a specific user has left"""
+        reviews = Review.objects.all()
+        reviews = reviews.filter(user_id = pk)
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
