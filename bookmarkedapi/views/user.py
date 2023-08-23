@@ -54,3 +54,15 @@ class UserView(ViewSet):
             author_id=author_id
         )
         return Response({'message': 'Now following user'}, status=status.HTTP_201_CREATED)
+
+    @action(methods=['delete'], detail=True)
+    def unfollow(self, request, pk):
+        """Delete request for a user to unfollow another user"""
+        follower_id = User.objects.get(pk=request.META['HTTP_AUTHORIZATION'])
+        author_id = User.objects.get(pk=pk)
+        following = Following.objects.get(
+            follower_id=follower_id,
+            author_id=author_id
+        )
+        following.delete()
+        return Response({'message': 'User unfollowed'}, status=status.HTTP_204_NO_CONTENT)
