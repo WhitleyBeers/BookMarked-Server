@@ -2,8 +2,9 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from bookmarkedapi.serializers import BookSerializer
-from bookmarkedapi.models import Book, User
+from rest_framework.decorators import action
+from bookmarkedapi.serializers import BookSerializer, ReviewSerializer
+from bookmarkedapi.models import Book, User, Review
 
 class BookView(ViewSet):
     """Bookedmarked books"""
@@ -56,3 +57,24 @@ class BookView(ViewSet):
         book = Book.objects.get(pk=pk)
         book.delete()
         return Response({'message': 'Book deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+      
+    @action(methods=['post'], detail=True)
+    def post_review(self, request, pk):
+        """Post request for a user to leave a review on a book"""
+        user_id = User.objects.get(pk=request.META['HTTP_AUTHORIZATION'])
+        book_id = Book.objects.get(pk=pk)
+        review = Review.objects.create(
+            user_id = user_id,
+            book_id = book_id,
+            content = request.data['content'],
+            rating = request.data['rating']
+        )
+        return Response({'message': 'Review posted'}, status=status.HTTP_201_CREATED)
+    
+    @action(methods=['get'], detail=True)
+    def reviews(self, request, pk):
+        """Get request for a user to see reviews on a book"""
+        reviews = Review.objects.all()
+        reviews = reviews.filter(book_id = pk)
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
