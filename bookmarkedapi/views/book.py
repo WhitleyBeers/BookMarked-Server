@@ -50,3 +50,9 @@ class BookView(ViewSet):
         book.status = request.data['status']
         book.save()
         return Response({'message': 'Book updated successfully'}, status=status.HTTP_204_NO_CONTENT)
+      
+    def destroy(self, request, pk):
+        """DELETE request to delete a book"""
+        book = Book.objects.get(pk=pk)
+        book.delete()
+        return Response({'message': 'Book deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
