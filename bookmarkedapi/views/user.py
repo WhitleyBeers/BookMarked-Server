@@ -3,8 +3,8 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
-from bookmarkedapi.serializers import UserSerializer, ReviewSerializer
-from bookmarkedapi.models import User, Review
+from bookmarkedapi.serializers import UserSerializer, ReviewSerializer, FollowingSerializer
+from bookmarkedapi.models import User, Review, Following
 
 
 class UserView(ViewSet):
@@ -42,4 +42,36 @@ class UserView(ViewSet):
         reviews = Review.objects.all()
         reviews = reviews.filter(user_id = pk)
         serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
+
+    @action(methods=['post'], detail=True)
+    def follow(self, request, pk):
+        """Post request for a user to follow another user"""
+        follower_id = User.objects.get(pk=request.META['HTTP_AUTHORIZATION'])
+        author_id = User.objects.get(pk=pk)
+        following = Following.objects.create(
+            follower_id=follower_id,
+            author_id=author_id
+        )
+        return Response({'message': 'Now following user'}, status=status.HTTP_201_CREATED)
+
+    @action(methods=['delete'], detail=True)
+    def unfollow(self, request, pk):
+        """Delete request for a user to unfollow another user"""
+        follower_id = User.objects.get(pk=request.META['HTTP_AUTHORIZATION'])
+        author_id = User.objects.get(pk=pk)
+        following = Following.objects.get(
+            follower_id=follower_id,
+            author_id=author_id
+        )
+        following.delete()
+        return Response({'message': 'User unfollowed'}, status=status.HTTP_204_NO_CONTENT)
+    
+    @action(methods=['get'], detail=True)
+    def following(self, request, pk):
+        """Gets users that a specific user follows"""
+        following_list = Following.objects.all()
+        user = User.objects.get(pk=pk)
+        following_list = following_list.filter(follower_id=user)
+        serializer = FollowingSerializer(following_list, many=True)
         return Response(serializer.data)
