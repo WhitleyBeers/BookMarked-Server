@@ -13,6 +13,12 @@ class UserView(ViewSet):
         """get single user"""
         try:
             user = User.objects.get(pk=pk)
+            follower = request.META['HTTP_AUTHORIZATION']
+            follower = User.objects.get(id=follower)
+            user.following = len(Following.objects.filter(
+                follower_id = follower,
+                author_id = pk,
+            )) > 0
             serializer = UserSerializer(user)
             return Response(serializer.data)
         except User.DoesNotExist as ex:
