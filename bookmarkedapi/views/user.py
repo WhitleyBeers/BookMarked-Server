@@ -13,6 +13,12 @@ class UserView(ViewSet):
         """get single user"""
         try:
             user = User.objects.get(pk=pk)
+            follower = request.META['HTTP_AUTHORIZATION']
+            follower = User.objects.get(id=follower)
+            user.following = len(Following.objects.filter(
+                follower_id = follower,
+                author_id = pk,
+            )) > 0
             serializer = UserSerializer(user)
             return Response(serializer.data)
         except User.DoesNotExist as ex:
@@ -20,19 +26,24 @@ class UserView(ViewSet):
     
     def list(self, request):
         """GET request for list of users"""
+        pk = request.META['HTTP_AUTHORIZATION']
+        follower = User.objects.get(pk=pk)
         users = User.objects.all()
+        for user in users:
+            user.following = len(Following.objects.filter(
+                follower_id = follower,
+                author_id = user,
+            )) > 0
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     
     def update(self, request, pk):
         """PUT request to update a user"""
         user = User.objects.get(pk=pk)
-        uid = request.META['HTTP_AUTHORIZATION']
         user.first_name = request.data['firstName']
         user.last_name = request.data['lastName']
         user.bio = request.data['bio']
         user.profile_image_url = request.data['profileImageUrl']
-        user.uid = uid
         user.save()
         return Response({'message': 'User updated'}, status=status.HTTP_204_NO_CONTENT)
 
@@ -65,7 +76,7 @@ class UserView(ViewSet):
             author_id=author_id
         )
         following.delete()
-        return Response({'message': 'User unfollowed'}, status=status.HTTP_204_NO_CONTENT)
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
     
     @action(methods=['get'], detail=True)
     def following(self, request, pk):

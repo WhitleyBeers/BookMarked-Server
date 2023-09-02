@@ -6,7 +6,12 @@ class UserSerializer(serializers.ModelSerializer):
     """JSON serializer for users"""
     class Meta:
         model = User
-        fields = ('__all__')
+        fields = ('id',
+                  'first_name',
+                  'last_name',
+                  'bio',
+                  'profile_image_url',
+                  'following')
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
