@@ -20,7 +20,14 @@ class UserView(ViewSet):
     
     def list(self, request):
         """GET request for list of users"""
+        pk = request.META['HTTP_AUTHORIZATION']
+        follower = User.objects.get(pk=pk)
         users = User.objects.all()
+        for user in users:
+            user.following = len(Following.objects.filter(
+                follower_id = follower,
+                author_id = user,
+            )) > 0
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     
@@ -63,7 +70,7 @@ class UserView(ViewSet):
             author_id=author_id
         )
         following.delete()
-        return Response({'message': 'User unfollowed'}, status=status.HTTP_204_NO_CONTENT)
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
     
     @action(methods=['get'], detail=True)
     def following(self, request, pk):
