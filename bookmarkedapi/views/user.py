@@ -3,7 +3,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
-from bookmarkedapi.serializers import UserSerializer, ReviewSerializer, FollowingSerializer
+from bookmarkedapi.serializers import UserSerializer, ReviewSerializer, UserReviewSerializer
 from bookmarkedapi.models import User, Review, Following
 
 
@@ -13,12 +13,6 @@ class UserView(ViewSet):
         """get single user"""
         try:
             user = User.objects.get(pk=pk)
-            follower = request.META['HTTP_AUTHORIZATION']
-            follower = User.objects.get(id=follower)
-            user.following = len(Following.objects.filter(
-                follower_id = follower,
-                author_id = pk,
-            )) > 0
             serializer = UserSerializer(user)
             return Response(serializer.data)
         except User.DoesNotExist as ex:
@@ -44,6 +38,7 @@ class UserView(ViewSet):
         user.last_name = request.data['lastName']
         user.bio = request.data['bio']
         user.profile_image_url = request.data['profileImageUrl']
+        user.email = request.data['email']
         user.save()
         return Response({'message': 'User updated'}, status=status.HTTP_204_NO_CONTENT)
 
@@ -79,10 +74,27 @@ class UserView(ViewSet):
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
     @action(methods=['get'], detail=True)
+    def checkfollowing(self, request, pk):
+        """Checks to see if a user is following another user"""
+        user = User.objects.get(pk=pk)
+        follower = request.META['HTTP_AUTHORIZATION']
+        follower = User.objects.get(id=follower)
+        user.following = len(Following.objects.filter(
+            follower_id = follower,
+            author_id = pk,
+        )) > 0
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    
+    @action(methods=['get'], detail=True)
     def following(self, request, pk):
         """Gets users that a specific user follows"""
-        following_list = Following.objects.all()
         user = User.objects.get(pk=pk)
-        following_list = following_list.filter(follower_id=user)
-        serializer = FollowingSerializer(following_list, many=True)
+        following_list = Following.objects.filter(follower_id=user)
+        reviews = []
+        for following in following_list:
+            author=following.author_id
+            author_reviews=Review.objects.filter(user_id=author)
+            reviews.extend(author_reviews)
+        serializer = UserReviewSerializer(reviews, many=True)
         return Response(serializer.data)

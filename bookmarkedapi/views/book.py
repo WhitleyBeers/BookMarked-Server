@@ -22,6 +22,9 @@ class BookView(ViewSet):
         books = Book.objects.all()
         user = request.META['HTTP_AUTHORIZATION']
         books = Book.objects.filter(user_id = user)
+        favorite = request.query_params.get('favorite', None)
+        if favorite is not None:
+            books = books.filter(favorite=True)
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
       
