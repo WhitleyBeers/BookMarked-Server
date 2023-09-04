@@ -4,8 +4,8 @@ from bookmarkedapi.models import Following
 
 class FollowingSerializer(serializers.ModelSerializer):
     """JSON serializer for following list"""
-    
     class Meta:
         model = Following
-        fields = ('__all__')
+        fields = ('author_id',
+                  'reviews')
         depth = 1

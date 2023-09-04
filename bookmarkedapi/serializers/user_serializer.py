@@ -1,6 +1,16 @@
 from rest_framework import serializers
-from bookmarkedapi.models import User
+from bookmarkedapi.models import User, Review
 
+
+class UserReviewSerializer(serializers.ModelSerializer):
+    """JSON serializer for showing user reviews"""
+    class Meta:
+        model = Review
+        fields = ('content',
+                  'rating',
+                  'user_id',
+                  'book_id')
+        depth = 1
 
 class UserSerializer(serializers.ModelSerializer):
     """JSON serializer for users"""
@@ -9,6 +19,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id',
                   'first_name',
                   'last_name',
+                  'email',
+                  'uid',
                   'bio',
                   'profile_image_url',
                   'following')
