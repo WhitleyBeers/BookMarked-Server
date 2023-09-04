@@ -6,7 +6,8 @@ class UserReviewSerializer(serializers.ModelSerializer):
     """JSON serializer for showing user reviews"""
     class Meta:
         model = Review
-        fields = ('content',
+        fields = ('id',
+                  'content',
                   'rating',
                   'user_id',
                   'book_id')
